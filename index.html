@@ -2,201 +2,177 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>APNA-BHAI Prediction</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>APNA-BHAI V2.0</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
   <style>
+    /* Same styling as before (unchanged) */
     body {
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
       margin: 0;
       padding: 0;
-      background-color: #f7d1d1; /* Light Pink Background */
-      font-family: 'Poppins', sans-serif;
-      color: #a00000;
     }
     .container {
-      max-width: 420px;
-      margin: auto;
       padding: 20px;
+      max-width: 500px;
+      margin: auto;
     }
-    .title {
-      text-align: center;
+    .header {
       font-size: 36px;
-      font-weight: 500;
-      font-family: 'Orbitron', sans-serif;
-      color: #d00000;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+      font-weight: 700;
+      color: #00ffcc;
+      text-align: center;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: fadeIn 2s ease-in-out;
+      font-family: 'Poppins', sans-serif;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
     .card {
-      background: #fff0f0;
-      border-radius: 15px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      padding: 20px;
-      margin-top: 20px;
+      background: #111;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px #00ffcc;
     }
-    .period-label {
-      font-weight: bold;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
+    .card label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: #00ffcc;
     }
-    .period-label i {
-      margin-right: 8px;
-    }
-    .period-input {
+    .card input {
       width: 100%;
-      padding: 10px;
-      text-align: center;
-      font-size: 18px;
-      background: #ffecec;
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 5px;
       border: none;
-      border-radius: 8px;
-      margin-bottom: 10px;
+      background: #222;
+      color: #fff;
     }
-    .result-section {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: bold;
+    .prediction-box {
+      text-align: center;
+      font-size: 20px;
+      padding: 10px;
+      background: #222;
+      border: 1px solid #00ffcc;
+      border-radius: 8px;
       margin-top: 10px;
     }
-    .big-text {
-      background: #ffcccc;
-      padding: 5px 10px;
-      border-radius: 10px;
-      color: #b00000;
-    }
-    .dashboard-title {
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      border-bottom: 2px solid #ffb3b3;
-      padding-bottom: 5px;
-    }
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 6px 0;
-    }
-    .connected {
-      color: green;
-      font-weight: bold;
-    }
-    .footer {
-      text-align: center;
-      font-weight: bold;
-      font-size: 16px;
-      margin-top: 30px;
-    }
-    .history-title {
-      font-size: 20px;
-      font-weight: bold;
-      margin-top: 30px;
-    }
     .history-card {
-      background: #fff;
-      border-radius: 20px;
-      padding: 15px;
-      margin-top: 15px;
+      background: #111;
+      border-left: 5px solid #00ffcc;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    .history-card.yellow { background: #fff8e1; border-left: 5px solid #ffc107; }
-    .history-card.green { background: #e7fbe8; border-left: 5px solid #28a745; }
-    .history-card.red { background: #ffe5e5; border-left: 5px solid #dc3545; }
-    .prediction-label { font-weight: bold; }
+    .history-card.green { border-color: #0f0; }
+    .history-card.red { border-color: #f00; }
+    .history-card.yellow { border-color: #ff0; }
+    .prediction-label {
+      font-weight: bold;
+    }
     .history-actions i {
       margin-left: 10px;
-      font-size: 18px;
       cursor: pointer;
     }
-    .fa-trash-alt { color: #cc0000; /* Modern trash icon */ }
-
-    /* Animations */
+    .win-icon { color: #0f0; }
+    .loss-icon { color: #f00; }
+    .spinner {
+      color: #ff0;
+      animation: spin 1s linear infinite;
+    }
     @keyframes spin {
-      0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-    .spinner {
-      animation: spin 1s linear infinite;
-      color: #ffc107;
+    .stats {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 16px;
+      display: flex;
+      justify-content: space-around;
     }
-    @keyframes bounce {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.3); }
+    .stats div {
+      background: #222;
+      border-radius: 8px;
+      padding: 10px;
+      width: 30%;
+      box-shadow: 0 0 5px #00ffcc;
     }
-    .win-icon {
-      animation: bounce 0.6s ease-in-out infinite;
-      color: #28a745;
+    .stats div i {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 5px;
     }
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-3px); }
-      50% { transform: translateX(3px); }
-      75% { transform: translateX(-3px); }
-      100% { transform: translateX(0); }
-    }
-    .loss-icon {
-      animation: shake 0.5s ease-in-out infinite;
-      color: #dc3545;
+    .history-container {
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="title">APNA-BHAI V2.0</div>
+    <div class="header">APNA-BHAI V3.0</div>
 
-    <div class="card">
-      <div class="period-label"><i class="fa-solid fa-calendar-days"></i>Period</div>
-      <input type="text" id="periodDisplay" class="period-input" value="-" readonly />
-      <div class="result-section">
-        <span><i class="fa-solid fa-chart-bar"></i> Prediction</span>
-        <span class="big-text" id="predictionDisplay">-</span>
+    <div class="card stats">
+      <div>
+        <i class="fa-solid fa-circle-check win-icon"></i>
+        Wins<br><span id="wins">0</span>
       </div>
-      <div class="result-section">
-        <span><i class="fa-solid fa-shuffle"></i> Opposite</span>
-        <span class="big-text" id="oppositeDisplay">-</span>
+      <div>
+        <i class="fa-solid fa-circle-xmark loss-icon"></i>
+        Losses<br><span id="losses">0</span>
+      </div>
+      <div>
+        <i class="fa-solid fa-bullseye" style="color: #00ffcc;"></i>
+        Accuracy<br><span id="accuracy">0%</span>
       </div>
     </div>
 
     <div class="card">
-      <div class="dashboard-title">Analysis Dashboard</div>
-      <div class="info-row"><span><i class="fa-solid fa-percent"></i> Win Rate</span><span id="accuracy">0%</span></div>
-      <div class="info-row"><span><i class="fa-solid fa-trophy"></i> Wins</span><span id="wins">0</span></div>
-      <div class="info-row"><span><i class="fa-solid fa-skull-crossbones"></i> Losses</span><span id="losses">0</span></div>
-      <div class="info-row"><span><i class="fa-solid fa-server"></i> Server Status</span><span class="connected">Connected</span></div>
+      <label>Next Period:</label>
+      <input id="periodDisplay" type="text" disabled />
+      <div class="prediction-box">Prediction: <span id="predictionDisplay">--</span></div>
+      <div class="prediction-box">Opposite Number: <span id="oppositeDisplay">--</span></div>
     </div>
 
-    <div class="footer">TG @apnabhai87</div>
-
-    <div class="history-title">History</div>
-    <div id="historyContainer"></div>
+    <div class="card history-container">
+      <label>Prediction History:</label>
+      <div id="historyContainer"></div>
+    </div>
   </div>
 
   <script>
     let historyData = [];
     let lastFetchedPeriod = null;
 
-    function getOppositeNumberAI(prediction) {
-      const smallNumbers = [5, 8, 7, 9];
-      const bigNumbers = [0, 1, 3, 4, 2];
-      const selectedNumber = prediction === "SMALL"
-        ? smallNumbers[Math.floor(Math.random() * smallNumbers.length)]
-        : bigNumbers[Math.floor(Math.random() * bigNumbers.length)];
-      return selectedNumber;
+    function getOppositeNumber(prediction) {
+      const small = [0,1,2,3,4];
+      const big = [5,6,7,8,9];
+      return prediction === "BIG" ? small[Math.floor(Math.random()*small.length)] : big[Math.floor(Math.random()*big.length)];
     }
 
-    function trendAnalysis(history) {
-      if (history.length < 3) return Math.random() > 0.5 ? "BIG" : "SMALL";
-      const recent = history.slice(0, 5).filter(h => h.result !== "-");
-      const bigCount = recent.filter(item => item.result >= 5).length;
-      const smallCount = recent.filter(item => item.result < 5).length;
-      if (bigCount > smallCount) return "BIG";
-      if (smallCount > bigCount) return "SMALL";
-      return Math.random() > 0.5 ? "BIG" : "SMALL";
+    function predictBigSmallAI(history) {
+      if (history.length === 0) return "BIG";
+      const last = history[0];
+      if (last.resultStatus === "LOSS") {
+        return last.prediction === "BIG" ? "SMALL" : "BIG";
+      }
+      // Else use trend logic
+      const recent = history.slice(0, 20).filter(h => h.result !== "-");
+      const trend = recent.map(item => Number(item.result) >= 5 ? 1 : 0);
+      const sum = trend.reduce((a,b)=>a+b, 0);
+      const avg = sum / trend.length;
+      return avg >= 0.5 ? "SMALL" : "BIG"; // flipped logic
     }
 
     async function fetchGameResult() {
@@ -208,7 +184,7 @@
             pageSize: 10, pageNo: 1, typeId: 1, language: 0,
             random: "4a0522c6ecd8410496260e686be2a57c",
             signature: "334B5E70A0C9B8918B0B15E517E2069C",
-            timestamp: Math.floor(Date.now() / 1000)
+            timestamp: Math.floor(Date.now()/1000)
           })
         });
         let data = await response.json();
@@ -223,20 +199,20 @@
       let result = await fetchGameResult();
       if (!result || result.issueNumber === lastFetchedPeriod) return;
 
-      let predictionSize = trendAnalysis(historyData);
-      let opposite = getOppositeNumberAI(predictionSize);
-      let nextPeriod = (BigInt(result.issueNumber) + 1n).toString();
-
-      document.getElementById("periodDisplay").value = nextPeriod;
-      document.getElementById("predictionDisplay").innerText = predictionSize;
-      document.getElementById("oppositeDisplay").innerText = opposite;
-
       if (historyData.length > 0 && historyData[0].resultStatus === "Pending") {
         let actualSize = Number(result.number) >= 5 ? "BIG" : "SMALL";
         let last = historyData[0];
         last.result = result.number;
         last.resultStatus = (last.prediction === actualSize || last.opposite == result.number) ? "WIN" : "LOSS";
       }
+
+      let predictionSize = predictBigSmallAI(historyData);
+      let opposite = getOppositeNumber(predictionSize);
+      let nextPeriod = (BigInt(result.issueNumber) + 1n).toString().slice(-5);
+
+      document.getElementById("periodDisplay").value = nextPeriod;
+      document.getElementById("predictionDisplay").innerText = predictionSize;
+      document.getElementById("oppositeDisplay").innerText = opposite;
 
       historyData.unshift({
         period: nextPeriod,
@@ -246,7 +222,7 @@
         resultStatus: "Pending"
       });
 
-      if (historyData.length > 10) historyData.pop();
+      if (historyData.length > 1000) historyData.pop();
 
       updateHistory();
       updateStats();
@@ -277,7 +253,7 @@
             </div>
             <div class="history-actions">
               <i class="fa-solid ${iconClass}"></i>
-              <i class="fa-solid fa-trash-alt" onclick="deleteHistory(${index})"></i> <!-- Modern trash icon -->
+              <i class="fa-solid fa-trash-alt" onclick="deleteHistory(${index})"></i>
             </div>
           </div>
         `;
@@ -285,15 +261,17 @@
     }
 
     function updateStats() {
-      let wins = historyData.filter(i => i.resultStatus === "WIN").length;
-      let losses = historyData.filter(i => i.resultStatus === "LOSS").length;
-      let accuracy = wins + losses === 0 ? 0 : ((wins / (wins + losses)) * 100).toFixed(2);
+      const wins = historyData.filter(item => item.resultStatus === "WIN").length;
+      const losses = historyData.filter(item => item.resultStatus === "LOSS").length;
+      const total = wins + losses;
+      const accuracy = total > 0 ? (wins / total) * 100 : 0;
+
       document.getElementById("wins").innerText = wins;
       document.getElementById("losses").innerText = losses;
-      document.getElementById("accuracy").innerText = `${accuracy}%`;
+      document.getElementById("accuracy").innerText = `${accuracy.toFixed(2)}%`;
     }
 
-    setInterval(updatePrediction, 4000);
+    setInterval(updatePrediction, 5000);
   </script>
 </body>
 </html>
